@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { BackHandler, Platform, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { BottomTabBar, type TabKey } from './src/components/BottomTabBar';
+import { RegistrationProvider, useRegistration } from './src/auth/RegistrationContext';
 import { LanguageProvider, useLanguage } from './src/i18n/LanguageContext';
 import { NotificationsProvider } from './src/notifications/NotificationsContext';
 import { ActiveIncidentsScreen } from './src/screens/ActiveIncidentsScreen';
@@ -12,6 +13,7 @@ import { LogEmergencyScreen } from './src/screens/LogEmergencyScreen';
 import { MapScreen } from './src/screens/MapScreen';
 import { MoreScreen } from './src/screens/MoreScreen';
 import { PlaceholderScreen } from './src/screens/PlaceholderScreen';
+import { SignUpScreen } from './src/screens/SignUpScreen';
 import { WarningsScreen } from './src/screens/WarningsScreen';
 import { colors } from './src/theme';
 
@@ -22,9 +24,11 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <LanguageProvider>
-        <NotificationsProvider>
-          <AppShell />
-        </NotificationsProvider>
+        <RegistrationProvider>
+          <NotificationsProvider>
+            <AppShell />
+          </NotificationsProvider>
+        </RegistrationProvider>
       </LanguageProvider>
     </SafeAreaProvider>
   );
@@ -32,6 +36,7 @@ export default function App() {
 
 function AppShell() {
   const { t } = useLanguage();
+  const { ready, registered } = useRegistration();
   const [tab, setTab] = useState<TabKey>('home');
   const [overlay, setOverlay] = useState<Overlay | null>(null);
   const closeOverlay = () => setOverlay(null);
@@ -51,10 +56,12 @@ function AppShell() {
       <View style={styles.backdrop}>
         <SafeAreaView style={styles.app} edges={['top']}>
           <StatusBar style="dark" />
-          {overlay === 'logEmergency' && <LogEmergencyScreen onCancel={closeOverlay} onDone={closeOverlay} />}
-          {overlay === 'activeIncidents' && <ActiveIncidentsScreen onBack={closeOverlay} />}
-          {overlay === 'warnings' && <WarningsScreen onBack={closeOverlay} />}
-          {overlay === null && (
+          {/* New users sign up first; once registered the app opens straight to the home dashboard. */}
+          {ready && !registered && <SignUpScreen />}
+          {ready && registered && overlay === 'logEmergency' && <LogEmergencyScreen onCancel={closeOverlay} onDone={closeOverlay} />}
+          {ready && registered && overlay === 'activeIncidents' && <ActiveIncidentsScreen onBack={closeOverlay} />}
+          {ready && registered && overlay === 'warnings' && <WarningsScreen onBack={closeOverlay} />}
+          {ready && registered && overlay === null && (
             <>
               <View style={styles.body}>
                 {tab === 'home' && (

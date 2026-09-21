@@ -65,6 +65,7 @@ export function MoreScreen({ onNavigate }: { onNavigate: (tab: TabKey) => void }
             </View>
           )}
         </View>
+
       </ScrollView>
     </View>
   );

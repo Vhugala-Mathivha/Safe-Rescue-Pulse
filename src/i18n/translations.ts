@@ -42,6 +42,25 @@ const en = {
   'more.languages': 'Languages',
   'more.languagesDesc': 'Add your South African language that you can use in the system.',
   'more.selectLanguage': 'Select language',
+
+  'signup.title': 'Sign up',
+  'signup.subtitle': 'Create your profile so emergency teams can identify you and reach you quickly.',
+  'signup.nameLabel': 'Full name',
+  'signup.namePlaceholder': 'Enter your full name',
+  'signup.nameRequired': 'Full name is required',
+  'signup.mobileLabel': 'Mobile number',
+  'signup.mobilePlaceholder': 'e.g. 071 234 5678',
+  'signup.mobileRequired': 'Mobile number is required',
+  'signup.mobileInvalid': 'Enter a valid South African mobile number',
+  'signup.idLabel': 'ID number',
+  'signup.idPlaceholder': 'Enter your 13-digit ID number',
+  'signup.idRequired': 'ID number is required',
+  'signup.idInvalid': 'Enter a valid 13-digit South African ID number',
+  'signup.submit': 'Sign up',
+  'signup.privacy': 'Your ID number is used to verify who you are when you report an emergency.',
+  'signup.successTitle': 'Sign up successful',
+  'signup.successMessage': 'Your profile has been created.',
+  'signup.done': 'Done',
 } as const;
 
 export type TranslationKey = keyof typeof en;
