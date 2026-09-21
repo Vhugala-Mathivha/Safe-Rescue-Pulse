@@ -7,9 +7,12 @@ import { DEFAULT_LOCATION, colors } from '../theme';
 
 type Props = {
   onNavigate: (tab: TabKey) => void;
+  onLogEmergency: () => void;
+  onOpenIncidents: () => void;
+  onOpenWarnings: () => void;
 };
 
-export function HomeScreen({ onNavigate }: Props) {
+export function HomeScreen({ onNavigate, onLogEmergency, onOpenIncidents, onOpenWarnings }: Props) {
   return (
     <View style={styles.screen}>
       <AppHeader location={DEFAULT_LOCATION} onPressBell={() => onNavigate('alerts')} />
@@ -20,19 +23,19 @@ export function HomeScreen({ onNavigate }: Props) {
             title="Log Emergency"
             description="Report a fire, accident or medical emergency and get help on the way."
             color={colors.emergency}
-            onPress={() => onNavigate('alerts')}
+            onPress={onLogEmergency}
           />
           <AlertLevelCard
             title="Active Incidents"
             description="View active reported incidents that are in your area."
             color={colors.watchAndAct}
-            onPress={() => onNavigate('alerts')}
+            onPress={onOpenIncidents}
           />
           <AlertLevelCard
             title="Warnings and Alerts"
             description="Avoid accident-hit roads and heavy traffic, and stay off speeding."
             color={colors.advice}
-            onPress={() => onNavigate('alerts')}
+            onPress={onOpenWarnings}
           />
         </View>
 

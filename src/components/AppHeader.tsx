@@ -1,6 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useLanguage } from '../i18n/LanguageContext';
+import { useNotifications } from '../notifications/NotificationsContext';
 import { APP_NAME, colors } from '../theme';
+import { CountBadge } from './CountBadge';
 
 type Props = {
   location: string;
@@ -9,6 +12,9 @@ type Props = {
 };
 
 export function AppHeader({ location, onPressBell, onPressLocation }: Props) {
+  const { t } = useLanguage();
+  const { unreadCount } = useNotifications();
+
   return (
     <View style={styles.wrapper}>
       <View style={styles.titleRow}>
@@ -18,14 +24,15 @@ export function AppHeader({ location, onPressBell, onPressLocation }: Props) {
             {APP_NAME}
           </Text>
         </View>
-        <Pressable onPress={onPressBell} hitSlop={10} accessibilityLabel="Notifications">
-          <Ionicons name="notifications" size={22} color={colors.emergency} />
+        <Pressable onPress={onPressBell} hitSlop={10} accessibilityLabel="Notifications" style={styles.bell}>
+          <Ionicons name="notifications" size={24} color={colors.emergency} />
+          <CountBadge count={unreadCount} style={styles.bellBadge} />
         </Pressable>
       </View>
 
       <Pressable style={styles.locationRow} onPress={onPressLocation} accessibilityLabel="Change location">
         <Ionicons name="location-sharp" size={15} color={colors.text} />
-        <Text style={styles.locationLabel}>Current Location</Text>
+        <Text style={styles.locationLabel}>{t('header.currentLocation')}</Text>
         <View style={styles.spacer} />
         <Text style={styles.locationValue}>{location}</Text>
         <Ionicons name="chevron-down" size={14} color={colors.text} style={styles.chevron} />
@@ -78,6 +85,8 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: colors.textMuted,
   },
+  bell: { paddingRight: 6 },
+  bellBadge: { top: -7, right: -4 },
   spacer: { flex: 1 },
   locationValue: {
     fontSize: 11,

@@ -14,5 +14,5 @@ npm start        # then scan the QR code with Expo Go, or press a (Android) / w 
 
 - `App.tsx` – app shell and bottom tab navigation
 - `src/theme.ts` – colours, app name, default location
-- `src/screens/` – screens (Home is built; Map, Alerts, Info, More are placeholders)
+- `src/screens/` – screens (Home is built; Map is interactive; Call, Alerts, More are placeholders)
 - `src/components/` – header, alert level cards, incidents map preview, tab bar
