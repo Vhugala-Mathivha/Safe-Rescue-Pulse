@@ -3,6 +3,7 @@ import { AlertLevelCard } from '../components/AlertLevelCard';
 import { AppHeader } from '../components/AppHeader';
 import type { TabKey } from '../components/BottomTabBar';
 import { IncidentsMapPreview } from '../components/IncidentsMapPreview';
+import { useLanguage } from '../i18n/LanguageContext';
 import { DEFAULT_LOCATION, colors } from '../theme';
 
 type Props = {
@@ -13,6 +14,8 @@ type Props = {
 };
 
 export function HomeScreen({ onNavigate, onLogEmergency, onOpenIncidents, onOpenWarnings }: Props) {
+  const { t } = useLanguage();
+
   return (
     <View style={styles.screen}>
       <AppHeader location={DEFAULT_LOCATION} onPressBell={() => onNavigate('alerts')} />
@@ -20,29 +23,29 @@ export function HomeScreen({ onNavigate, onLogEmergency, onOpenIncidents, onOpen
       <ScrollView contentContainerStyle={styles.content} bounces={false}>
         <View style={styles.cards}>
           <AlertLevelCard
-            title="Log Emergency"
-            description="Report a fire, accident or medical emergency and get help on the way."
+            title={t('home.log.title')}
+            description={t('home.log.desc')}
             color={colors.emergency}
             onPress={onLogEmergency}
           />
           <AlertLevelCard
-            title="Active Incidents"
-            description="View active reported incidents that are in your area."
+            title={t('home.active.title')}
+            description={t('home.active.desc')}
             color={colors.watchAndAct}
             onPress={onOpenIncidents}
           />
           <AlertLevelCard
-            title="Warnings and Alerts"
-            description="Avoid accident-hit roads and heavy traffic, and stay off speeding."
+            title={t('home.warnings.title')}
+            description={t('home.warnings.desc')}
             color={colors.advice}
             onPress={onOpenWarnings}
           />
         </View>
 
         <View style={styles.incidentsHeader}>
-          <Text style={styles.incidentsTitle}>INCIDENTS NEAR ME</Text>
+          <Text style={styles.incidentsTitle}>{t('home.incidentsNearMe').toUpperCase()}</Text>
           <Pressable onPress={() => onNavigate('map')} hitSlop={8}>
-            <Text style={styles.viewMap}>VIEW MAP {'>'}</Text>
+            <Text style={styles.viewMap}>{t('home.viewMap').toUpperCase()} {'>'}</Text>
           </Pressable>
         </View>
 

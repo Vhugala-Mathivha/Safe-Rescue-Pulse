@@ -3,24 +3,35 @@ import { useEffect, useState } from 'react';
 import { BackHandler, Platform, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { BottomTabBar, type TabKey } from './src/components/BottomTabBar';
+import { LanguageProvider, useLanguage } from './src/i18n/LanguageContext';
+import { NotificationsProvider } from './src/notifications/NotificationsContext';
 import { ActiveIncidentsScreen } from './src/screens/ActiveIncidentsScreen';
+import { AlertsScreen } from './src/screens/AlertsScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { LogEmergencyScreen } from './src/screens/LogEmergencyScreen';
 import { MapScreen } from './src/screens/MapScreen';
+import { MoreScreen } from './src/screens/MoreScreen';
 import { PlaceholderScreen } from './src/screens/PlaceholderScreen';
 import { WarningsScreen } from './src/screens/WarningsScreen';
 import { colors } from './src/theme';
-
-const TAB_TITLES: Record<Exclude<TabKey, 'home' | 'map'>, string> = {
-  alerts: 'Alerts',
-  call: 'Call',
-  more: 'More',
-};
 
 /** Full-screen pages opened from the home cards; they hide the bottom tab bar. */
 type Overlay = 'logEmergency' | 'activeIncidents' | 'warnings';
 
 export default function App() {
+  return (
+    <SafeAreaProvider>
+      <LanguageProvider>
+        <NotificationsProvider>
+          <AppShell />
+        </NotificationsProvider>
+      </LanguageProvider>
+    </SafeAreaProvider>
+  );
+}
+
+function AppShell() {
+  const { t } = useLanguage();
   const [tab, setTab] = useState<TabKey>('home');
   const [overlay, setOverlay] = useState<Overlay | null>(null);
   const closeOverlay = () => setOverlay(null);
@@ -36,7 +47,7 @@ export default function App() {
   }, [overlay]);
 
   return (
-    <SafeAreaProvider>
+    <>
       <View style={styles.backdrop}>
         <SafeAreaView style={styles.app} edges={['top']}>
           <StatusBar style="dark" />
@@ -55,14 +66,16 @@ export default function App() {
                   />
                 )}
                 {tab === 'map' && <MapScreen onNavigate={setTab} />}
-                {tab !== 'home' && tab !== 'map' && <PlaceholderScreen title={TAB_TITLES[tab]} />}
+                {tab === 'alerts' && <AlertsScreen onNavigate={setTab} />}
+                {tab === 'more' && <MoreScreen onNavigate={setTab} />}
+                {tab === 'call' && <PlaceholderScreen title={t('tab.call')} />}
               </View>
               <BottomTabBar active={tab} onChange={setTab} />
             </>
           )}
         </SafeAreaView>
       </View>
-    </SafeAreaProvider>
+    </>
   );
 }
 
