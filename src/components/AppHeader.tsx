@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { APP_NAME, colors } from '../theme';
 
 type Props = {
@@ -12,9 +12,12 @@ export function AppHeader({ location, onPressBell, onPressLocation }: Props) {
   return (
     <View style={styles.wrapper}>
       <View style={styles.titleRow}>
-        <Text style={styles.title} numberOfLines={1}>
-          {APP_NAME}
-        </Text>
+        <View style={styles.brand}>
+          <Image source={require('../../assets/logo.jpg')} style={styles.logo} resizeMode="contain" />
+          <Text style={styles.title} numberOfLines={1}>
+            {APP_NAME}
+          </Text>
+        </View>
         <Pressable onPress={onPressBell} hitSlop={10} accessibilityLabel="Notifications">
           <Ionicons name="notifications" size={22} color={colors.emergency} />
         </Pressable>
@@ -43,7 +46,18 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 12,
   },
+  brand: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexShrink: 1,
+  },
+  logo: {
+    width: 34,
+    height: 34,
+    marginRight: 8,
+  },
   title: {
+    fontFamily: 'Trebuchet MS',
     fontSize: 22,
     fontWeight: '800',
     letterSpacing: -0.3,

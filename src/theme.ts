@@ -14,4 +14,4 @@ export const colors = {
 } as const;
 
 export const APP_NAME = 'Safe Rescue Pulse';
-export const DEFAULT_LOCATION = 'Melbourne, VIC';
+export const DEFAULT_LOCATION = 'Ga-Rankuwa, PTA';

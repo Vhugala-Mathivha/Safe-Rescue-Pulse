@@ -17,20 +17,20 @@ export function HomeScreen({ onNavigate }: Props) {
       <ScrollView contentContainerStyle={styles.content} bounces={false}>
         <View style={styles.cards}>
           <AlertLevelCard
-            title="Emergency Warning"
-            description="You are in danger and need to act immediately."
+            title="Log Emergency"
+            description="Report a fire, accident or medical emergency and get help on the way."
             color={colors.emergency}
             onPress={() => onNavigate('alerts')}
           />
           <AlertLevelCard
-            title="Watch and Act"
-            description="There is a heightened level of threat."
+            title="Active Incidents"
+            description="View active reported incidents that are in your area."
             color={colors.watchAndAct}
             onPress={() => onNavigate('alerts')}
           />
           <AlertLevelCard
-            title="Advice"
-            description="There is no immediate threat."
+            title="Warnings and Alerts"
+            description="Avoid accident-hit roads and heavy traffic, and stay off speeding."
             color={colors.advice}
             onPress={() => onNavigate('alerts')}
           />
