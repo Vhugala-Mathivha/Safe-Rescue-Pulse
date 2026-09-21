@@ -15,3 +15,5 @@ export const colors = {
 
 export const APP_NAME = 'Safe Rescue Pulse';
 export const DEFAULT_LOCATION = 'Ga-Rankuwa, PTA';
+// Map centre for DEFAULT_LOCATION (latitude, longitude).
+export const DEFAULT_COORDS = { latitude: -25.6167, longitude: 28.0167 };
